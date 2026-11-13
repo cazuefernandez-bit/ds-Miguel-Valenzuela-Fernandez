@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Design system · Observatorio del Empleo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Work+Sans:wght@400;500;600&display=swap">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('oe-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+<style>
+/* TEMAS: para cambiar colores edita solo estos dos bloques (:root = claro, [data-theme=dark] = oscuro).
+   Para crear otro tema copia un bloque, cámbiale el selector ([data-theme=nombre]) y agrégalo al botón. */
+:root{color-scheme:light;--serif:Newsreader,Georgia,serif;--sans:"Work Sans",system-ui,sans-serif;
+--bg:#f8f9fa;--surf:#ffffff;--surf2:#f0f2f5;--ink:#1b1c1c;--ink2:#424242;--mute:#5c5f6b;--line:#cccccc;--ctl:#747684;
+--pri:#2949ab;--pri-h:#1e3680;--pri-t:#eaeffb;--on-pri:#ffffff;
+--ok:#1e6b05;--ok-bg:#e8f8e3;--ok-dot:#40c70a;--ok-btn:#40c70a;--on-ok:#1a4b06;--err:#b51d19;--err-bg:#fbe8e7;
+--s0:#dce1ff;--s1:#a9b9f5;--s2:#6f89dc;--s3:#3a5bc0;--s4:#162f7a;--sh:0 4px 16px rgba(66,66,66,.08)}
+[data-theme=dark]{color-scheme:dark;
+--bg:#111318;--surf:#1a1d24;--surf2:#232730;--ink:#f2f0f0;--ink2:#d3d4da;--mute:#a3a7b5;--line:#3b3f4a;--ctl:#8d92a3;
+--pri:#9fb2ff;--pri-h:#c4d0ff;--pri-t:#1f2a52;--on-pri:#0b1a55;
+--ok:#7bdc58;--ok-bg:#183316;--ok-dot:#5ce230;--ok-btn:#5ce230;--on-ok:#042100;--err:#ffa095;--err-bg:#3d1816;
+--s0:#25305c;--s1:#34479a;--s2:#5972d4;--s3:#92a7ff;--s4:#d9e0ff;--sh:0 4px 16px rgba(0,0,0,.45)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink2);font:400 15px/22px var(--sans)}
+h1,h2,h3,h4{font-family:var(--serif);color:var(--ink);margin:0}h1{font:600 34px/42px var(--serif);letter-spacing:-.015em}
+h2{font:600 28px/36px var(--serif);margin-bottom:8px}h3{font:600 18px/24px var(--serif);margin-bottom:6px}h4{font:600 14px/20px var(--sans);margin:16px 0 8px}
+@media(min-width:768px){h1{font-size:48px;line-height:56px;letter-spacing:-.02em}}
+p{margin:0 0 12px}a{color:var(--pri)}code{font:500 12px var(--sans);background:var(--surf2);padding:1px 5px;border-radius:4px}
+.w{max-width:1120px;margin:0 auto;padding:0 16px}@media(min-width:1024px){.w{padding:0 32px}}
+header{position:sticky;top:0;z-index:5;background:var(--surf);border-bottom:1px solid var(--line)}
+.hd{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:10px 0 4px}.logo{font:600 20px var(--serif);color:var(--ink)}
+nav{display:flex;gap:2px;overflow-x:auto;padding-bottom:6px}nav a{white-space:nowrap;color:var(--ink2);text-decoration:none;font:500 13px var(--sans);padding:6px 10px;border-radius:4px}
+nav a:hover{background:var(--pri-t);color:var(--pri)}
+.hero{padding:40px 0 32px}.hero p{max-width:62ch;font:400 18px/28px var(--serif)}
+section{padding:40px 0;border-top:1px solid var(--line)}.lead{max-width:70ch}
+.g{display:grid;gap:16px}.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}.c3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}.c4{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:4px;padding:16px}.card.t{background:var(--pri-t)}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.mute{color:var(--mute)}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12px var(--sans);letter-spacing:.04em;color:var(--mute);background:var(--surf2)}tr.on td{background:var(--pri-t)}
+.sw{height:44px;border-radius:4px;border:1px solid var(--line);margin-bottom:6px}
+/* átomos */
+.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.b{font:600 14px/20px var(--sans);letter-spacing:.02em;padding:9px 16px;border-radius:4px;border:1px solid transparent;cursor:pointer;display:inline-flex;gap:8px;align-items:center;background:none;color:var(--ink2)}
+.b.p{background:var(--pri);color:var(--on-pri)}.b.p:hover,.b.p.h{background:var(--pri-h)}
+.b.s{border-color:var(--ink2)}.b.s:hover,.b.s.h{background:var(--ink2);color:var(--surf)}
+.b.ac{background:var(--ok-btn);color:var(--on-ok)}.b.ac:hover,.b.ac.h{filter:brightness(.92)}
+.b.dg{border-color:var(--err);color:var(--err)}.b.dg:hover,.b.dg.h{background:var(--err-bg)}
+.b:active,.b.a{box-shadow:inset 0 3px 0 rgba(0,0,0,.28)}
+.b:focus-visible,.b.f,.rg:focus-visible,.lk:focus-visible,a:focus-visible,.in:focus-visible,input:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.b:disabled,.b.d{opacity:.5;cursor:not-allowed;box-shadow:none}
+.lk{background:none;border:0;padding:0;font:600 13px var(--sans);color:var(--pri);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.bd{display:inline-flex;gap:6px;align-items:center;font:600 10px/14px var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:4px;background:var(--surf2);color:var(--ink2)}
+.bd.ok{background:var(--ok-bg);color:var(--ok)}.bd.ok:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok-dot)}
+.bd.al{background:var(--err-bg);color:var(--err)}.bd.src{background:var(--pri-t);color:var(--pri)}
+.in{font:400 15px var(--sans);padding:9px 12px;border:1px solid var(--ctl);border-radius:4px;background:var(--surf);color:var(--ink);min-width:200px}
+.in:focus,.in.f{border-color:var(--pri);box-shadow:0 0 0 .5px var(--pri)}.in:hover{border-color:var(--mute)}
+label{font:600 13px var(--sans);color:var(--ink)}.help{font:400 13px/18px var(--sans);color:var(--mute);margin:4px 0 0}
+input[type=checkbox],input[type=radio]{width:18px;height:18px;accent-color:var(--pri);margin:0 6px 0 0;vertical-align:-3px}
+.fig{font:600 48px/56px var(--serif);color:var(--ink);letter-spacing:-.02em}.fig small{font:500 18px var(--serif);color:var(--mute);letter-spacing:0;margin-left:4px}
+.dl{font:600 14px var(--sans);color:var(--ink)}.src{font:400 12px/16px var(--sans);color:var(--mute);margin:8px 0 0;border-top:1px solid var(--line);padding-top:8px}
+.ia{display:flex;gap:8px;align-items:flex-start;font:400 13px/18px var(--sans);background:var(--surf2);border-radius:4px;padding:10px}
+/* mapa */
+.mp{display:grid;gap:16px;grid-template-columns:1fr}@media(min-width:900px){.mp{grid-template-columns:minmax(240px,300px) 1fr}}
+.mp svg{display:block;margin:0 auto;height:min(72vh,720px);width:auto;max-width:100%}
+.rg{cursor:pointer;outline:none}.rg polygon,.rg .gp{stroke:var(--bg);stroke-width:1.5;transition:stroke .12s}.rg .gp{vector-effect:non-scaling-stroke}.rg text{font:500 13px var(--sans);fill:var(--ink2)}.rg tspan{font-weight:600;fill:var(--ink)}.rg path:not(.gp){stroke:var(--line);fill:none}
+.rg:hover polygon{stroke:var(--pri);stroke-width:3}.rg:hover .gp{stroke:var(--pri);stroke-width:2.5}.rg.on polygon{stroke:var(--ink);stroke-width:3.5}.rg:focus-visible polygon{stroke:var(--pri);stroke-width:4;stroke-dasharray:7 3}.rg:focus-visible .gp{stroke:var(--pri);stroke-width:3;stroke-dasharray:6 3}
+.ovl{fill:none;stroke:var(--ink);stroke-width:3.5;vector-effect:non-scaling-stroke;pointer-events:none;stroke-linejoin:round}
+.bn{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:4px;border:1px solid var(--line);background:var(--ok-bg);color:var(--ok);font:500 14px/20px var(--sans)}.bn.w{background:var(--err-bg);color:var(--err)}.bn .i{margin-top:1px}
+.sb.w{background:var(--err-bg);color:var(--err)}
+.lg{display:flex;flex-wrap:wrap;gap:6px 14px;font:400 12px var(--sans)}.lg i{display:inline-block;width:14px;height:14px;border-radius:2px;border:1px solid var(--line);vertical-align:-3px;margin-right:5px}
+.pop{background:var(--surf);border:1px solid var(--line);border-radius:8px;box-shadow:var(--sh);padding:16px}
+/* pantallas */
+.scr{border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:10px;display:grid;gap:8px;font-size:11px;line-height:15px;align-content:start}.scr.m{max-width:320px}
+.scr>div{border-radius:4px}.scr.e>div,.scr.e .mm,.scr.e .sc>*{border:1px dashed var(--line)}.wl{color:var(--mute);font-size:11px}
+.sb{background:var(--ok-bg);color:var(--ok);padding:8px}.st{display:flex;gap:6px;flex-wrap:wrap;padding:4px}.ch{border:1px solid var(--line);background:var(--surf);border-radius:4px;padding:3px 7px;color:var(--ink)}
+.sm{display:grid;gap:8px}.scr.d .sm{grid-template-columns:1fr 1fr}.mm{height:150px;display:flex;flex-direction:column;gap:1px;padding:0;overflow:hidden;align-items:center;justify-content:center;text-align:center}.mm i{flex:1;align-self:stretch}
+.sc{display:grid;gap:6px;align-content:start}.sc>*{background:var(--surf);border:1px solid var(--line);padding:6px 8px;border-radius:4px;display:block}.sc b{font:600 20px var(--serif);color:var(--ink);display:block}
+.sk{border-radius:4px;background:linear-gradient(90deg,var(--surf2),var(--line),var(--surf2));background-size:200% 100%;animation:sh 1.4s linear infinite}@keyframes sh{to{background-position:-200% 0}}
+@media(prefers-reduced-motion:reduce){.sk{animation:none}.rg polygon{transition:none}}
+.cols{display:grid;gap:var(--g);margin:8px 0}.cols i{background:var(--pri-t);height:24px;border:1px solid var(--line)}
+.sq{width:34px;height:34px;border-radius:4px}
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:4px;font:500 13px var(--sans);display:none;z-index:9}
+[hidden]{display:none!important}section{scroll-margin-top:96px}nav a.cur{background:var(--pri-t);color:var(--pri);font-weight:600}
+.seg[aria-pressed=true]{background:var(--ink2);color:var(--surf)}
+.tkb{background:none;border:0;padding:0;text-align:left;font:inherit;color:inherit;cursor:copy;width:100%;display:block}.tkb:hover b{text-decoration:underline}[data-copy]{cursor:copy}
+.tkb:focus-visible,[data-copy]:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.in.h{border-color:var(--mute)}.in:disabled,.in.d{opacity:.5;cursor:not-allowed}
+footer.pg{padding:24px 0 40px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+<symbol id="alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 10v5M12 17.5v.5"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><path d="m4 12 5 5 11-11"/></symbol>
+<symbol id="copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></symbol>
+<symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/></symbol>
+</defs></svg>
+<header><div class="w"><div class="hd"><span class="logo">Observatorio del Empleo</span>
+<button class="b s" id="tt" aria-pressed="false"><svg class="i"><use href="#sun"/></svg><span id="ttl">Tema oscuro</span></button></div>
+<nav aria-label="Secciones del design system"><a href="#s1">1 Producto</a><a href="#s2">2 Principios</a><a href="#s3">3 Tokens</a><a href="#s4">4 Átomos</a><a href="#s5">5 Moléculas</a><a href="#s6">6 Organismos</a><a href="#s7">7 Plantillas</a><a href="#s8">8 Estados</a><a href="#s9">9 Datos y voz</a><a href="#s10">10 Accesibilidad e IA</a></nav></div></header>
+<main>
+<div class="w hero"><h1>Design system del agente del Observatorio del Empleo</h1>
+<p>Un agente que lee los boletines regionales de la ENE para que periodistas jóvenes y de medios regionales encuentren su dato, sin leer páginas de texto. Las cifras vienen del último boletín que sirve el agente y cada una lleva su fuente.</p><div id="bn" role="status" style="max-width:62ch;margin-top:16px"></div></div>
+
+<section id="s1"><div class="w"><h2>1 · El producto</h2><p class="lead">El lienzo, en ocho casillas, y el boceto de la primera pantalla.</p>
+<div class="g c4" id="lienzo"></div>
+<h4>Boceto de la primera pantalla (escritorio)</h4><div id="boceto"></div></div></section>
+
+<section id="s2"><div class="w"><h2>2 · Principios</h2><p class="lead">Lo que no se negocia. Cada regla tiene una consecuencia concreta en la interfaz.</p><div class="g c3" id="princ"></div></div></section>
+
+<section id="s3"><div class="w"><h2>3 · Tokens</h2>
+<p class="lead">Los valores viven como variables CSS al inicio del archivo. El botón de tema cambia de claro a oscuro; el contraste se vuelve a medir solo. Haz clic en un color, un tamaño de letra o un espaciado para copiar su valor.</p>
+<h3>Color</h3><div class="g c4" id="sw"></div>
+<h4>Contraste medido (tema actual, WCAG 2.1)</h4><div class="tw"><table id="ct"></table></div>
+<h3 style="margin-top:28px">Tipografía</h3><p>Newsreader para titulares y lectura larga; Work Sans para datos, controles y metadatos. En móvil, <code>display</code> baja a 34/42 y <code>headline-xl</code> a 28/36.</p><div class="tw"><table id="ty"></table></div>
+<h3 style="margin-top:28px">Espaciado</h3><div class="row" id="sp"></div>
+<h3 style="margin-top:28px">Grilla y anchos de pantalla</h3><div id="gr"></div>
+<h3 style="margin-top:28px">Bordes y sombras</h3><div class="row"><div class="card">Regla 1 px <code>--line</code></div><div class="card" style="border-radius:8px">Radio 8 px (modales)</div><div class="pop">Sombra flotante <code>--sh</code></div><span class="bd src" style="border-radius:9999px">Pill: solo contadores</span></div></div></section>
+
+<section id="s4"><div class="w"><h2>4 · Átomos</h2><p class="help">Pasa el cursor, toca o usa Tab sobre cualquier componente para ver sus estados. En la sección 8 puedes forzarlos uno por uno.</p>
+<h4>Botones</h4><div class="row"><button class="b p">Descargar nota</button><button class="b s">Ver boletín</button><button class="b ac">Publicar</button><button class="b dg">Retirar nota</button></div>
+<h4>Enlace y etiquetas</h4><div class="row"><a href="#s9">Cómo se escriben las cifras</a><button class="lk">Ver fuente</button><span class="bd">Borrador</span><span class="bd ok">Verificada</span><span class="bd al">Sin fuente</span><span class="bd src">ENE · INE</span></div>
+<h4>Campos y selectores</h4><div class="row" style="align-items:flex-start"><div><label for="a1">Buscar región</label><br><input class="in" id="a1" placeholder="Ej.: Atacama"><p class="help">Escribe parte del nombre.</p></div>
+<div><label for="a2">Trimestre móvil</label><br><select class="in" id="a2"><option>jun-ago 2026 (último cargado)</option><option disabled>jul-sep 2026 (no cargado)</option></select></div>
+<div><label><input type="checkbox" checked>Mujeres</label><br><label><input type="checkbox">Hombres</label></div><div><label><input type="radio" name="r" checked>Tasa</label><br><label><input type="radio" name="r">Desocupados</label></div></div>
+<h4>Íconos (trazo 2 px, 18 px)</h4><div class="row"><svg class="i"><use href="#search"/></svg><svg class="i"><use href="#info"/></svg><svg class="i"><use href="#alert"/></svg><svg class="i"><use href="#check"/></svg><svg class="i"><use href="#copy"/></svg><span class="help">Siempre acompañan a un texto o llevan <code>aria-label</code>.</span></div>
+<h4>La cifra</h4><div class="row"><div class="fig">9,8<small>%</small></div><div class="fig">+1,4<small>pp</small></div><div class="fig">16,2<small>mil personas</small></div></div></div></section>
+
+<section id="s5"><div class="w"><h2>5 · Moléculas</h2><div class="g c2">
+<div><h4>Tarjeta de cifra con fuente</h4><div id="mfig"></div></div>
+<div><h4>Selector de región</h4><div class="card"><label for="rsel">Región</label><br><select class="in" id="rsel" data-sel></select><p class="help">Elige una región o toca el mapa. Cambia todo el sitio.</p></div>
+<h4>Leyenda del mapa</h4><div class="card"><div class="lg" id="lg1"></div></div></div>
+<div><h4>Banner del boletín</h4><div id="mbn"></div></div>
+<div><h4>Selector de medida</h4><div class="card"><div class="row" role="group" aria-label="Medida de la tasa"><button class="b s seg" data-m="t" aria-pressed="true">Total</button><button class="b s seg" data-m="m" aria-pressed="false">Mujeres</button><button class="b s seg" data-m="h" aria-pressed="false">Hombres</button></div><p class="help">Cambia el color del mapa y la cifra de la ficha.</p></div></div>
+<div><h4>Línea de fuente</h4><div class="card"><p class="src" style="border:0;padding:0;margin:0">Fuente: INE, Encuesta Nacional de Empleo (ENE), boletín regional, trimestre móvil jun-ago 2026. Datos de ejemplo.</p></div></div>
+<div><h4>Línea de uso de IA</h4><div class="ia"><svg class="i"><use href="#info"/></svg><span><b>Borrador escrito por IA (<span class="mdl"></span>).</b> Las cifras las verifica una persona antes de publicar.</span></div></div></div></div></section>
+
+<section id="s6"><div class="w"><h2>6 · Organismos</h2><p class="lead">Cabecera y navegación: arriba de esta página. Abajo, el mapa, la ficha y la tabla comparten la misma región seleccionada.</p>
+<div class="row" role="group" aria-label="Medida de la tasa" style="margin-bottom:12px"><span class="help" style="margin:0">Tasa de desocupación de:</span><button class="b s seg" data-m="t" aria-pressed="true">Total</button><button class="b s seg" data-m="m" aria-pressed="false">Mujeres</button><button class="b s seg" data-m="h" aria-pressed="false">Hombres</button></div>
+<div class="mp"><div class="card"><h3>Mapa de las 16 regiones</h3><p class="help" id="mapd">Cargando contorno geográfico…</p><svg id="map" viewBox="0 0 330 650" role="group" aria-label="Mapa de Chile con sus 16 regiones, coloreadas por tasa de desocupación. Los mismos datos están en la tabla."></svg><div class="lg" id="lg2" style="margin-top:8px"></div></div>
+<div><div class="card" id="fi" aria-live="polite"></div></div></div>
+<h4>Tabla de regiones (misma información que el mapa)</h4><div class="tw card" style="padding:0"><table id="tb"></table></div>
+<h4>Bloque de la nota</h4><div class="card" id="nota"></div>
+<h4>Componente nuevo: comparador de dos regiones</h4><p class="help" style="margin-top:-4px">Armado solo con piezas existentes: selector de región, cifra, etiqueta de fuente y línea de fuente.</p><div class="card" id="cmp"></div>
+<h4>Pie con la declaración de IA</h4><div class="card t"><b>Cómo se hizo esta nota.</b> Un agente de IA (<span class="mdl"></span>) leyó el boletín regional de la ENE y redactó un borrador. Una persona compara cada cifra con el boletín antes de publicar. El agente no hace proyecciones ni usa datos fuera del boletín. Este sitio y su design system se hicieron con apoyo de Claude (Anthropic) como herramienta de trabajo.</div></div></section>
+
+<section id="s7"><div class="w"><h2>7 · Plantillas y páginas</h2><p class="lead">Primero la plantilla vacía (qué va y dónde); después la página con los datos del último boletín.</p>
+<div class="row" role="group" aria-label="Ancho de pantalla"><button class="b s seg" data-w="m" aria-pressed="false">Teléfono</button><button class="b s seg" data-w="d" aria-pressed="true">Escritorio</button></div>
+<div class="row" style="align-items:flex-start;margin-top:12px" id="ph" hidden></div><div class="g c2" style="margin-top:12px" id="dk"></div></div></section>
+
+<section id="s8"><div class="w"><h2>8 · Estados</h2>
+<h4>De cada componente</h4><div class="row" id="st1"></div>
+<div class="row" style="margin-top:12px" id="st2"></div>
+<h4>Probador de estados</h4><div class="card"><div class="row" style="align-items:flex-start"><div><label for="pc">Componente</label><br><select class="in" id="pc"></select></div><fieldset style="border:0;padding:0;margin:0"><legend style="font:600 13px var(--sans);color:var(--ink);padding:0">Estado</legend><div class="row" id="ps" style="margin-top:6px"></div></fieldset></div><div id="pv2" style="padding:28px 0"></div><p class="help" id="pd"></p><p class="help">Además, pasa el cursor o toca el componente: sus estados reales también responden.</p></div>
+<h4>De los datos</h4><div class="g c4">
+<div class="card" aria-busy="true"><b>Cargando</b><div class="sk" style="height:44px;margin:10px 0"></div><div class="sk" style="height:14px;width:60%"></div></div>
+<div class="card"><b>Sin datos</b><p>El boletín cargado no incluye cifras de Aysén para este cruce. Prueba otro trimestre móvil.</p></div>
+<div class="card" role="alert"><span class="bd al">Error</span><p style="margin-top:8px">No se pudo cargar el boletín: la subida se cortó. Reintenta o avisa a quien sube los datos.</p><button class="b p">Reintentar</button></div>
+<div class="card"><b>No consta</b><div class="fig" title="No consta">n/c</div><p class="help">El INE no publica esta cifra para el cruce elegido. El agente no la estima.</p></div>
+<div class="card"><b>Boletín desactualizado</b><div id="stl" style="margin-top:8px"></div></div></div></div></section>
+
+<section id="s9"><div class="w"><h2>9 · Datos y voz</h2>
+<h4>Escala de color del mapa (tasa de desocupación)</h4><div class="card"><div class="lg" id="lg3"></div><p class="help" style="margin-top:8px">Cinco tramos, de menos a más desocupación. El color nunca va solo: cada región lleva su cifra escrita y hay una tabla equivalente.</p></div>
+<h4>Cómo se escribe</h4><div class="tw card" style="padding:0"><table><tr><th>Qué</th><th>Así</th><th>No así</th></tr>
+<tr><td>Cifras</td><td>9,8%</td><td>9.8 %, 9,80%</td></tr><tr><td>Puntos porcentuales</td><td>+1,4 pp (con signo)</td><td>1,4% más</td></tr>
+<tr><td>Fechas</td><td>trimestre móvil jun-ago 2026</td><td>Q1, el último trimestre</td></tr><tr><td>Cantidades</td><td>16,2 mil personas</td><td>16.2k</td></tr>
+<tr><td>Fuentes</td><td>Fuente: INE, ENE, trimestre móvil jun-ago 2026</td><td>Según datos oficiales</td></tr></table></div>
+<h4>Textos de ayuda</h4><div class="g c3"><div class="card">«Elige una región o toca el mapa.»</div><div class="card">«pp = puntos porcentuales: la diferencia entre dos tasas.»</div><div class="card">«Compara cada cifra con el boletín antes de copiar.»</div></div>
+<p class="help" style="margin-top:12px">Voz: directa, en verbo activo, sentencia en minúscula salvo la inicial; sin disculpas ni adivinanzas. La acción se llama igual en todo el flujo («Copiar nota» → «Nota copiada»).</p></div></section>
+
+<section id="s10"><div class="w"><h2>10 · Accesibilidad e IA</h2><div class="g c2">
+<div class="card"><h3>Contraste</h3><p id="ctsum"></p><p class="help">Mínimo AA: 4,5:1 en texto y 3:1 en bordes y componentes. Se mide con los tokens del tema activo (ver tabla en sección 3).</p></div>
+<div class="card"><h3>Foco visible</h3><p>Todo control interactivo (botón, región del mapa, fila de tabla) tiene un contorno de 3 px con 2 px de separación. Navega con <code>Tab</code> y <code>Enter</code>.</p><button class="b s">Prueba el foco</button></div>
+<div class="card"><h3>Textos alternativos</h3><p>Mapa: «Mapa de Chile con sus 16 regiones, coloreadas por tasa de desocupación. Los mismos datos están en la tabla.» Cada región: «Atacama: 9,8%».</p></div>
+<div class="card"><h3>Cómo usé IA para hacer este design system</h3><p>Con Claude (Anthropic) a partir del lienzo, el archivo DESIGN.md y las pantallas de referencia. La IA propuso la estructura, el código y los textos; Las cifras salen del endpoint /regiones del agente y el contorno del mapa, del GeoJSON público caracena/chile-geojson; ninguna cifra la generó la IA. Las notas del sitio final las redacta el agente con <span class="mdl"></span>, no con Claude. Las decisiones de producto y la revisión final son humanas.</p><p class="help">Completa aquí: fecha y persona que revisó.</p></div></div></div></section>
+</main>
+<footer class="pg"><div class="w">Design system v0.2 · Modern Editorial Press · datos: INE, boletín ENE n.º 335, vía el agente (/regiones).</div></footer>
+<div id="toast" role="status"></div>
+<script>
+const API="https://ia-toolkit.miguel-valenzuela-f.workers.dev/regiones",GJ="https://raw.githubusercontent.com/caracena/chile-geojson/master/regiones.json";
+// codigo INE, código DPA, número romano, nombre corto, nombre oficial (de norte a sur)
+const META=[["AP",15,"XV","Arica y Parinacota","Arica y Parinacota"],["TA",1,"I","Tarapacá","Tarapacá"],["AN",2,"II","Antofagasta","Antofagasta"],["AT",3,"III","Atacama","Atacama"],["CO",4,"IV","Coquimbo","Coquimbo"],["VS",5,"V","Valparaíso","Valparaíso"],["RM",13,"RM","Metropolitana","Metropolitana de Santiago"],["LI",6,"VI","O'Higgins","Libertador General Bernardo O'Higgins"],["ML",7,"VII","Maule","Maule"],["NB",16,"XVI","Ñuble","Ñuble"],["BI",8,"VIII","Biobío","Biobío"],["AR",9,"IX","La Araucanía","La Araucanía"],["LR",14,"XIV","Los Ríos","Los Ríos"],["LL",10,"X","Los Lagos","Los Lagos"],["AI",11,"XI","Aysén","Aysén del General Carlos Ibáñez del Campo"],["MA",12,"XII","Magallanes","Magallanes y de la Antártica Chilena"]];
+const OFF=Object.fromEntries(META.map(m=>[m[0],m[4]])),U=(r,f)=>"https://regiones.ine.gob.cl/documentos/default-source/region-"+r+"/estadisticas/ocupacion-y-desocupacion/boletines/2026/"+f;
+// Copia del endpoint /regiones (boletín n.º 335), usada si el agente no responde. Formato: codigo, tasa, variación pp, hombres, mujeres, informalidad, edición, url
+const SN=[["AI",4,-.3,4,4,27.5,197,U("xi","bolet%c3%adn-empleo-regi%c3%b3n-de-ays%c3%a9n-trimestre-m%c3%b3vil-junio---agosto-2026.pdf")],
+["AN",6.3,-.4,5.5,7.5,20.9,136,"https://regiones.ine.gob.cl/documentos/default-source/region-ii/estadistica/ocupacion-y-desocupacion/boletines/2026/empleo-trimestre-m%c3%b3vil-junio---agosto-2026.pdf"],
+["AP",9.4,2.7,10.2,8.4,31.6,198,U("xv","encuesta-nacional-de-empleo---ene-periodo-junio---agosto-2026.pdf")],
+["AR",10.1,.8,9.8,10.5,33.3,198,U("ix","boletin-empleo-jja2026.pdf")],
+["AT",9.5,.2,8.5,10.7,27.9,198,U("iii","ene---per%c3%adodo-junio---agosto-2026.pdf")],
+["BI",10.7,.8,10.3,11.1,27.9,198,"https://regiones.ine.cl/documentos/default-source/region-viii/estadisticas/ocupacion-y-desocupacion/boletines/2026/bolet%c3%adn-empleo-biob%c3%ado-trimestre-m%c3%b3vil-junio-agosto-2026.pdf"],
+["CO",9.4,1.8,9,9.8,28.1,246,U("iv","bolet%c3%adn-empleo-junio---agosto-2026.pdf")],
+["LI",10.8,2.2,9.1,13.2,29.4,186,U("vi","bolet%c3%adn-regional-trimestre-m%c3%b3vil-junio-2026---julio-2026---agosto-2026.pdf")],
+["LL",7.8,2.8,7.7,7.9,26.4,293,U("x","ene---periodo-junio---agosto-2026.pdf")],
+["LR",10.2,1.1,9.9,10.6,32.3,209,U("xiv","bolet%c3%adn-empleo-trimestre-m%c3%b3vil-junio---agosto-2026.pdf")],
+["MA",6.9,.7,6.1,7.9,20.9,198,U("xii","emp_jja_2026_(3-0).pdf")],
+["ML",9.5,1.6,8.5,10.7,30.6,91,U("vii","informe-empleo-junio-agosto-2026.pdf")],
+["NB",11.2,1.1,10.5,12,32.2,93,U("xvi","bolet%c3%adn-empleo-regional-trimestre-m%c3%b3vil-junio---agosto-2026.pdf")],
+["RM",9.8,.9,9.4,10.2,23.4,123,"https://www.ine.gob.cl/docs/default-source/ocupacion-y-desocupacion/boletines/2026/rm/ene-rm-123.pdf"],
+["TA",7.8,.8,7.5,8.2,30.6,198,U("i","informe-de-empleo-junio---agosto-2026.pdf")],
+["VS",10.2,1.4,9.3,11.4,28.6,124,U("v","bolet%c3%adn-empleo-regional-trimestre-m%c3%b3vil-junio---agosto-2026.pdf")]];
+const SNAP={trimestre:"junio-agosto 2026",fecha_publicacion:"2026-09-30",boletin:335,nacional:{tasa:9.6,variacion_pp:1,url:"https://www.ine.gob.cl/docs/default-source/ocupacion-y-desocupacion/boletines/2026/nacional/ene-nacional-335.pdf"},regiones:SN.map(s=>({codigo:s[0],tasa:s[1],variacion_pp:s[2],tasa_hombres:s[3],tasa_mujeres:s[4],informalidad:s[5],fuente:`INE, Boletín estadístico: empleo trimestral, región ${OFF[s[0]]}, edición n° ${s[6]}, 30 de septiembre de 2026`,url:s[7]}))};
+const H=[24,38,66,48,40,26,20,20,28,18,28,30,22,52,60,70],W=[44,46,52,54,56,58,60,60,62,62,64,64,66,70,80,92];
+let R=[],NAC,TRI,PUB,BOL,PAIS,ST="",SEL=3,GEO=null,rank=[],MEAS='t';const MODELO='Gemini 3.6 Flash',ML={t:'Total',m:'Mujeres',h:'Hombres'},val=r=>MEAS=='m'?r[11]:MEAS=='h'?r[10]:r[1];
+const f=n=>n.toFixed(1).replace('.',','),pp=n=>{n=+n.toFixed(1);return(n>0?'+':n<0?'−':'')+f(Math.abs(n))+' pp'},bin=v=>v<7?0:v<9?1:v<10?2:v<11?3:4,$=s=>document.querySelector(s),
+LB=["Menos de 7,0%","7,0% a 8,9%","9,0% a 9,9%","10,0% a 10,9%","11,0% o más"],fd=s=>s.split('-').reverse().join('-'),ab=t=>t.replace(/(\w{3})\w*-(\w{3})\w*/,'$1-$2'),
+age=()=>Math.floor((Date.now()-new Date(PUB+'T12:00:00'))/864e5),src=()=>`Fuente: INE, Encuesta Nacional de Empleo (ENE), boletín n.º ${BOL}, trimestre móvil ${TRI}, publicado el ${fd(PUB)}.`,
+ok=d=>d&&d.nacional&&typeof d.nacional.tasa=='number'&&Array.isArray(d.regiones)&&META.every(m=>d.regiones.some(r=>r.codigo==m[0]&&typeof r.tasa=='number'&&typeof r.tasa_mujeres=='number'));
+function build(d){const m=Object.fromEntries(d.regiones.map(r=>[r.codigo,r]));
+R=META.map(x=>{const r=m[x[0]];return[x[3],r.tasa,+(r.tasa_mujeres-r.tasa_hombres).toFixed(1),r.variacion_pp,r.informalidad,x[1],x[2],x[4],r.fuente,r.url,r.tasa_hombres,r.tasa_mujeres]});
+PAIS=d.nacional.tasa;NAC=d.nacional;TRI=d.trimestre;PUB=d.fecha_publicacion;BOL=d.boletin;
+rank=R.map((r,i)=>i).sort((a,b)=>R[b][1]-R[a][1]||a-b)}
+const place=i=>1+R.filter(r=>val(r)>val(R[i])).length;
+const leg=()=>LB.map((t,i)=>`<span><i style="background:var(--s${i})"></i>${t}</span>`).join('');
+function bnH(force){const n=age(),old=force===0?false:(force||n>35);return`<div class="bn${old?' w':''}"><svg class="i"><use href="#${old?'alert':'check'}"/></svg><div>${old?`<b>Revisa antes de publicar.</b> El último boletín cargado es el n.º ${BOL} (${ab(TRI)}), publicado hace ${n} días. El INE publica uno al mes, así que puede haber uno más nuevo.`:`<b>Último boletín cargado:</b> ENE n.º ${BOL}, trimestre móvil ${ab(TRI)}, publicado el ${fd(PUB)}.`}<span style="display:block;font:400 12px/16px var(--sans);margin-top:2px">${ST}</span></div></div>`}
+// ---- contenido estático
+$('#lienzo').innerHTML=[["Para quién","Periodistas jóvenes y de medios regionales. No tienen tiempo de leer los boletines de la ENE y necesitan sacar notas sobre empleo lo antes posible."],["Su problema","Cada mes deben leer una gran cantidad de texto poco comprensible en los boletines regionales de la Encuesta Nacional del Empleo."],["En cinco segundos","Entender cómo buscar los datos de su región, ver la brecha de género y comparar con trimestres móviles anteriores, sin mucho esfuerzo."],["La primera pantalla","En grande, la confirmación del último boletín disponible (por si hubo un error en la subida). Además, todas las funciones necesarias de la página."],["Lo que puede hacer","Redactar notas breves con los datos más importantes: rango etario, género y comparación con el año pasado. En el mapa aparecen gráficos con esos mismos datos."],["Lo que hace el agente","La máquina hace la lectura, parte de la redacción y la revisión de los datos. La verificación de los datos que se suben es completamente humana."],["Lo que no promete","Datos más antiguos a los que no tiene acceso. Tampoco proyecciones: el agente no es vidente y sigue sus reglas al pie de la letra."],["Por qué confiar","Es un agente hecho por periodistas para periodistas. Con tanta información, se pierde el foco de lo importante; aquí el foco es el dato verificado."]].map((c,i)=>`<div class="card${i%2?'':' t'}"><h3>${c[0]}</h3><p style="margin:0">${c[1]}</p></div>`).join('');
+$('#princ').innerHTML=[["Toda cifra con su fuente","Ninguna cifra aparece sin su línea de fuente, boletín y trimestre móvil, con enlace al documento del INE."],["Primero, el boletín","La primera pantalla confirma cuál es el último boletín cargado y avisa si pasó más de un mes sin uno nuevo."],["Una persona verifica","El agente redacta; el botón de copiar queda deshabilitado hasta que alguien confirme las cifras."],["Sin proyecciones","Si el boletín no lo dice, se muestra «no consta». No se estima."],["IA declarada","Cada nota lleva la declaración de uso de IA."],["El color no va solo","Todo dato de color se repite en texto y en tabla."]].map(c=>`<div class="card"><h3>${c[0]}</h3><p style="margin:0">${c[1]}</p></div>`).join('');
+// ---- tokens
+const lum=h=>{const c=h.match(/\w\w/g).map(x=>parseInt(x,16)/255).map(v=>v<=.03928?v/12.92:((v+.055)/1.055)**2.4);return .2126*c[0]+.7152*c[1]+.0722*c[2]},
+cr=(a,b)=>{let x=lum(a),y=lum(b);if(x<y)[x,y]=[y,x];return(x+.05)/(y+.05)},V=n=>getComputedStyle(document.documentElement).getPropertyValue('--'+n).trim();
+const TK=[["bg","Fondo de página"],["surf","Tarjetas y lectura"],["surf2","Relleno de módulos"],["ink","Titulares"],["ink2","Texto de cuerpo"],["mute","Texto secundario"],["line","Reglas decorativas"],["ctl","Borde de campos"],["pri","Acción y selección"],["pri-h","Hover de acción"],["pri-t","Fondo de fuente"],["ok","Texto verificado"],["ok-btn","Publicar"],["err","Alerta"],["err-bg","Fondo de alerta"],["s0","Mapa: tramo 1"],["s4","Mapa: tramo 5"]];
+const CP=[["ink2","surf","Texto de cuerpo"],["mute","surf","Texto secundario"],["pri","surf","Enlaces y acciones"],["on-pri","pri","Botón primario"],["on-ok","ok-btn","Botón publicar"],["ok","ok-bg","Banner y etiqueta verificada"],["err","err-bg","Banner y etiqueta de alerta"],["ink","surf2","Titular sobre módulo"],["pri","pri-t","Etiqueta de fuente"],["ctl","surf","Borde de campos (mínimo 3:1)"]];
+function paint(){$('#sw').innerHTML=TK.map(t=>`<button class="tkb" data-copy="${V(t[0])}" title="Clic para copiar ${V(t[0])}"><div class="sw" style="background:var(--${t[0]})"></div><b style="font-size:13px">--${t[0]}</b> <span class="mute">${V(t[0])}</span><br><span class="help">${t[1]}</span></button>`).join('');
+let n=0;$('#ct').innerHTML='<tr><th>Par</th><th>Razón</th><th>Resultado</th></tr>'+CP.map(p=>{const r=cr(V(p[0]),V(p[1])),m=p[0]=='ctl'?3:4.5,pass=r>=m;n+=pass;return`<tr><td>${p[2]}</td><td>${r.toFixed(2).replace('.',',')}:1</td><td>${pass?(r>=7?'AAA':'AA')+' ✓':'No cumple'}</td></tr>`}).join('');
+$('#ctsum').textContent=`${n} de ${CP.length} pares medidos cumplen AA en el tema ${document.documentElement.dataset.theme=='dark'?'oscuro':'claro'}.`;
+$('#tt').setAttribute('aria-pressed',document.documentElement.dataset.theme=='dark');$('#ttl').textContent=document.documentElement.dataset.theme=='dark'?'Tema claro':'Tema oscuro'}
+$('#ty').innerHTML='<tr><th>Nombre</th><th>Fuente · tamaño/interlínea · peso</th><th>Muestra</th></tr>'+[["display-lg","s",48,56,600],["headline-xl","s",36,44,500],["headline-lg","s",28,36,600],["headline-md","s",22,30,500],["headline-sm","s",18,24,600],["body-lg","s",18,28,400],["body-md","w",15,22,400],["body-sm","w",13,18,400],["label-lg","w",14,20,600],["label-md","w",12,16,500],["label-sm","w",10,14,600]].map(t=>`<tr data-copy="${t[1]=='s'?'Newsreader':'Work Sans'} ${t[4]} ${t[2]}px/${t[3]}px" tabindex="0" title="Clic para copiar"><td>${t[0]}</td><td>${t[1]=='s'?'Newsreader':'Work Sans'} · ${t[2]}/${t[3]} · ${t[4]}</td><td style="font:${t[4]} ${t[2]}px/${t[3]}px var(--${t[1]=='s'?'serif':'sans'});color:var(--ink)${t[0]=='label-sm'?';text-transform:uppercase;letter-spacing:.08em':''}">Desocupación en Atacama</td></tr>`).join('');
+$('#sp').innerHTML=[["xs",4],["sm",8],["md",16],["lg",24],["xl",40]].map(s=>`<button class="tkb" style="width:auto" data-copy="${s[1]}px" title="Clic para copiar ${s[1]}px"><div style="width:${s[1]*3}px;height:16px;background:var(--pri);border-radius:2px"></div><span class="help">${s[0]} · ${s[1]} px</span></button>`).join('');
+$('#gr').innerHTML=[["Móvil · menos de 768 px",4,12,16],["Tableta · 768 a 1023 px",8,16,24],["Escritorio · desde 1024 px",12,24,32]].map(g=>`<p style="margin:8px 0 0"><b>${g[0]}</b>: ${g[1]} columnas, gutter ${g[2]} px, margen ${g[3]} px</p><div class="cols" style="--g:${g[2]}px;grid-template-columns:repeat(${g[1]},1fr)">${'<i></i>'.repeat(g[1])}</div>`).join('');
+$('#st1').innerHTML=[["p","Normal"],["p h","Encima"],["p a","Activo"],["p f","Foco"],["p d","Deshabilitado"]].map(s=>`<div><button class="b ${s[0]}"${s[0].includes('d')?' disabled':''}>${s[1]}</button></div>`).join('');
+$('#st2').innerHTML=`<span class="help" style="width:100%;margin:0">Campo y región del mapa</span><input class="in" placeholder="Normal"><input class="in f" placeholder="Foco"><input class="in" placeholder="Deshabilitado" disabled style="opacity:.5">`+["var(--s3)|Normal","var(--s3);outline:3px solid var(--pri);outline-offset:2px|Foco","var(--s3);box-shadow:0 0 0 3px var(--ink)|Elegida","var(--surf2);border:1px dashed var(--mute)|Sin datos"].map(s=>{const[a,b]=s.split('|');return`<div style="text-align:center"><div class="sq" style="background:${a}"></div><span class="help">${b}</span></div>`}).join('');
+document.querySelectorAll('[data-sel]').forEach(s=>s.innerHTML=META.map((m,i)=>`<option value="${i}">${m[3]}</option>`).join(''));
+// ---- pantallas
+const scr=(m,fl)=>{const r=R[3],n=age(),old=n>35,d=+(r[1]-PAIS).toFixed(1),cells=R.map(x=>`<i style="background:var(--s${bin(val(x))})"></i>`).join('');
+return`<div class="scr ${m} ${fl?'':'e'}"><div class="sb${fl&&old?' w':''}"${fl?'':' style="background:none"'}>${fl?`<b>${old?'Revisa: boletín de hace '+n+' días':'✓ Último boletín cargado'}</b><br>ENE n.º ${BOL} · ${ab(TRI)} · INE`:'<span class="wl">Último boletín disponible</span>'}</div>
+<div class="st">${fl?`<span class="ch">${r[0]} ▾</span><span class="ch">Mujeres · hombres</span><span class="ch">vs año anterior</span>`:'<span class="wl">Selector de región · género · comparación</span>'}</div>
+<div class="sm"><div class="mm">${fl?cells:'<span class="wl">Mapa de<br>16 regiones</span>'}</div><div class="sc">${fl?`<div><b>${f(r[1])}%</b>Tasa ${r[0]}</div><div><b>${pp(d)}</b>vs país</div><div><b>${pp(r[2])}</b>Brecha mujeres</div>`:'<span class="wl">Cifras con su fuente</span><span class="wl">Cifras con su fuente</span>'}</div></div></div>`};
+// ---- mapa geográfico (GeoJSON) y esquema de respaldo
+const parts=g=>!g?[]:g.type=='Polygon'?[g.coordinates]:g.type=='MultiPolygon'?g.coordinates:g.type=='GeometryCollection'?g.geometries.flatMap(parts):[];
+function mainland(pl){const r=pl&&pl[0];if(!r||!r.length)return false;let x=0,y=0;r.forEach(p=>{x+=p[0];y+=p[1]});x/=r.length;y/=r.length;return x>-78.5&&x<-65&&y>-57&&y<-16}
+function prepGeo(feats){const cl=Math.cos(35.5*Math.PI/180),o={};
+feats.forEach(ft=>{const p=ft.properties||{},c=+(p.codregion??p.COD_REGI??p.codigo_region),ps=parts(ft.geometry).filter(mainland);if(ps.length)o[c]=(o[c]||[]).concat(ps)});
+let a=1e9,b=-1e9,c=1e9,d=-1e9;const each=fn=>Object.values(o).forEach(ps=>ps.forEach(pl=>pl.forEach(r=>r.forEach(fn))));
+each(p=>{const x=p[0]*cl,y=-p[1];if(x<a)a=x;if(x>b)b=x;if(y<c)c=y;if(y>d)d=y});
+const pad=Math.max(b-a,d-c)*.012,D={};
+Object.entries(o).forEach(([k,ps])=>{D[k]=ps.map(pl=>pl.map(r=>{const st=Math.max(1,Math.ceil(r.length/1200));let s='';for(let i=0;i<r.length;i+=st){const p=r[i];s+=(i?'L':'M')+(p[0]*cl-a+pad).toFixed(3)+','+(-p[1]-c+pad).toFixed(3)}return s+'Z'}).join('')).join('')});
+return{W:b-a+2*pad,H:d-c+2*pad,D}}
+function drawMap(){const m=$('#map');
+if(GEO){m.setAttribute('viewBox',`0 0 ${GEO.W} ${GEO.H}`);m.innerHTML=R.map((r,i)=>`<g class="rg" role="button" tabindex="0" data-i="${i}" aria-label="${r[0]}: ${f(val(r))}%"><path class="gp" style="fill:var(--s${bin(val(r))})" d="${GEO.D[r[5]]}"/><title>${r[0]}: ${f(val(r))}%</title></g>`).join('')+'<path id="ov" class="ovl" aria-hidden="true"/>';return}
+let y=6,P='';R.forEach((r,i)=>{const h=H[i],w=W[i],w2=W[i+1]||w,c=100,ym=y+h/2;P+=`<g class="rg" role="button" tabindex="0" data-i="${i}" aria-label="${r[0]}: ${f(val(r))}%"><polygon points="${c-w/2},${y} ${c+w/2},${y} ${c+w2/2},${y+h} ${c-w2/2},${y+h}" fill="var(--s${bin(val(r))})"/><path d="M${c+(w+w2)/4+4},${ym} H150"/><text x="156" y="${ym+4}">${r[0]} <tspan>${f(val(r))}%</tspan></text></g>`;y+=h+3});m.setAttribute('viewBox','0 0 330 650');m.innerHTML=P}
+function render(){$('#bn').innerHTML=bnH();$('#stl').innerHTML=bnH(true);$('#mbn').innerHTML=bnH(0)+'<div style="height:8px"></div>'+bnH(true);
+$('#boceto').innerHTML=scr('d',0);$('#ph').innerHTML=scr('m',0)+scr('m',1);$('#dk').innerHTML=scr('d',0)+scr('d',1);
+$('#lg1').innerHTML=$('#lg2').innerHTML=$('#lg3').innerHTML=leg();
+$('#tb').innerHTML='<tr><th>Región</th><th>Tasa</th><th>vs país</th><th>Brecha mujeres–hombres</th><th>Var. en 12 meses</th><th>Ocupación informal</th></tr>'+`<tr><td><b>Chile</b></td><td>${f(PAIS)}%</td><td>—</td><td><abbr title="No consta en el endpoint">n/c</abbr></td><td>${pp(NAC.variacion_pp)}</td><td><abbr title="No consta en el endpoint">n/c</abbr></td></tr>`+rank.map(i=>`<tr data-r="${i}"><td><button class="lk" data-i="${i}">${R[i][0]}</button></td><td>${f(R[i][1])}%</td><td>${pp(R[i][1]-PAIS)}</td><td>${pp(R[i][2])}</td><td>${pp(R[i][3])}</td><td>${f(R[i][4])}%</td></tr>`).join('');
+drawMap();drawCmp()}
+function sel(i){SEL=i;const r=R[i],d=+(r[1]-PAIS).toFixed(1);
+document.querySelectorAll('.rg').forEach(g=>{g.classList.toggle('on',g.dataset.i==i);g.setAttribute('aria-pressed',g.dataset.i==i)});document.querySelectorAll('#tb tr[data-r]').forEach(t=>t.classList.toggle('on',t.dataset.r==i));document.querySelectorAll('[data-sel]').forEach(s=>s.value=i);
+const ov=$('#ov'),gp=document.querySelector(`.rg[data-i="${i}"] .gp`);if(ov)ov.setAttribute('d',gp?gp.getAttribute('d'):'');
+const fc=(l,v,u,s)=>`<div class="card" style="margin-bottom:12px"><div class="help" style="margin:0">${l}</div><div class="fig">${v}<small>${u}</small></div><div class="dl">${s}</div><p class="src">${src()}</p></div>`;
+$('#mfig').innerHTML=fc(`Tasa de desocupación (${ML[MEAS].toLowerCase()}) · ${r[0]}`,f(val(r)),'%',MEAS=='t'?pp(d)+' vs país ('+f(PAIS)+'%)':'Tasa total de la región: '+f(r[1])+'%');
+const cmp=d==0?'igual al promedio nacional':`${f(Math.abs(d))} pp ${d>0?'sobre':'bajo'} el promedio nacional`;
+$('#fi').innerHTML=`<div class="row" style="justify-content:space-between"><h3 style="margin:0">${r[0]} <span class="mute" style="font-weight:400">(${r[6]})</span></h3><span class="bd src">Puesto ${place(i)} de 16</span></div><div class="help" style="margin:4px 0 0">Tasa de desocupación · ${ML[MEAS]}</div><div class="fig">${f(val(r))}<small>%</small></div><table><tr><td>Tasa total vs país (${f(PAIS)}%)</td><td class="dl">${pp(d)}</td></tr><tr><td>Mujeres · hombres</td><td class="dl">${f(r[11])}% · ${f(r[10])}%</td></tr><tr><td>Brecha mujeres–hombres</td><td class="dl">${pp(r[2])}</td></tr><tr><td>Variación en 12 meses</td><td class="dl">${pp(r[3])}</td></tr><tr><td>Ocupación informal</td><td class="dl">${f(r[4])}%</td></tr></table><p class="src">${r[8]}. <a href="${r[9]}" target="_blank" rel="noopener">Abrir boletín</a></p><p class="help">Los puestos, diferencias y brechas las calcula el sitio con cifras publicadas por el INE.</p>`;
+const t=`En ${r[0]}, la tasa de desocupación fue de ${f(r[1])}% en el trimestre móvil ${TRI}, ${cmp} (${f(PAIS)}%). Entre las mujeres fue de ${f(r[11])}% y entre los hombres, de ${f(r[10])}%. En doce meses la tasa cambió ${pp(r[3])}. ${src()}`;
+$('#nota').innerHTML=`<div class="row" style="justify-content:space-between"><span class="bd">Borrador del agente · sin verificar</span><span class="bd src">IA: ${MODELO}</span></div><p style="font:400 18px/28px var(--serif);max-width:68ch;margin:12px 0" id="nt">${t}</p><label><input type="checkbox" id="vf">Comparé cada cifra con el boletín</label><div class="row" style="margin-top:12px"><button class="b p" id="cp" disabled><svg class="i"><use href="#copy"/></svg>Copiar nota</button><span class="help" style="margin:0">Se activa cuando verificas las cifras.</span></div>`;
+$('#vf').onchange=e=>$('#cp').disabled=!e.target.checked;$('#cp').onclick=()=>{cp(t);toast('Nota copiada')}}
+function toast(m){const e=$('#toast');e.textContent=m;e.style.display='block';setTimeout(()=>e.style.display='none',1800)}
+document.addEventListener('click',e=>{const g=e.target.closest('.rg,[data-i]');if(g&&g.dataset.i!=null)sel(+g.dataset.i)});
+document.addEventListener('keydown',e=>{if((e.key=='Enter'||e.key==' ')&&e.target.classList.contains('rg')){e.preventDefault();sel(+e.target.dataset.i)}});
+document.querySelectorAll('[data-sel]').forEach(s=>s.onchange=()=>sel(+s.value));
+$('#tt').onclick=()=>{const d=document.documentElement,n=d.dataset.theme=='dark'?'light':'dark';d.dataset.theme=n;try{localStorage.setItem('oe-theme',n)}catch(e){}paint()};
+// ---- interactividad: copiar, medida, ancho, probador, comparador, índice
+function fb(v){const t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}t.remove()}
+function cp(v){try{navigator.clipboard.writeText(v).catch(()=>fb(v))}catch(e){fb(v)}}
+document.querySelectorAll('.mdl').forEach(e=>e.textContent=MODELO);
+document.addEventListener('click',e=>{const c=e.target.closest('[data-copy]');if(c){cp(c.dataset.copy);toast('Copiado: '+c.dataset.copy)}
+const m=e.target.closest('[data-m]');if(m){MEAS=m.dataset.m;document.querySelectorAll('[data-m]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m==MEAS));render();sel(SEL)}
+const w=e.target.closest('[data-w]');if(w){document.querySelectorAll('[data-w]').forEach(b=>b.setAttribute('aria-pressed',b===w));$('#ph').hidden=w.dataset.w!='m';$('#dk').hidden=w.dataset.w!='d'}});
+document.addEventListener('keydown',e=>{if((e.key=='Enter'||e.key==' ')&&e.target.matches('tr[data-copy]')){e.preventDefault();e.target.click()}});
+const PS=[["n","Normal","Sin cambios de token."],["h","Encima","Con el cursor encima cambia el fondo o el borde."],["a","Activo","Mientras se presiona: sombra interior de 3 px."],["f","Foco","Con el teclado: contorno de 3 px en --pri, separado 2 px."],["d","Deshabilitado","Opacidad 50 % y cursor bloqueado; no recibe clics."]],PC={"Botón primario":"b p","Botón secundario":"b s","Botón destructivo":"b dg","Campo de texto":"in","Región del mapa":"rgn"};
+$('#pc').innerHTML=Object.keys(PC).map(k=>`<option>${k}</option>`).join('');
+$('#ps').innerHTML=PS.map((s,i)=>`<label><input type="radio" name="pst" value="${s[0]}"${i?'':' checked'}>${s[1]}</label>`).join(' ');
+function probe(){const k=PC[$('#pc').value],s=document.querySelector('#ps input:checked').value,d=PS.find(x=>x[0]==s);let h;
+if(k=='in')h=`<input class="in ${s=='h'?'h':s=='a'||s=='f'?'f':s=='d'?'d':''}" placeholder="Buscar región" aria-label="Campo de ejemplo"${s=='d'?' disabled':''}>`;
+else if(k=='rgn'){const t={n:'var(--s3)',h:'var(--s3);box-shadow:0 0 0 3px var(--pri)',a:'var(--s3);box-shadow:0 0 0 3px var(--ink)',f:'var(--s3);outline:3px dashed var(--pri);outline-offset:2px',d:'var(--surf2);border:1px dashed var(--mute)'};h=`<div class="sq" style="width:72px;height:72px;background:${t[s]}"></div>`}
+else h=`<button class="${k} ${s=='n'?'':s}"${s=='d'?' disabled':''}>Copiar nota</button>`;
+$('#pv2').innerHTML=h;$('#pd').textContent=d[1]+': '+d[2]}
+$('#pc').onchange=probe;$('#ps').onchange=probe;probe();
+let CA=3,CB=6;
+function drawCmp(){const a=R[CA],b=R[CB],d=+(val(a)-val(b)).toFixed(1),opt=i=>META.map((m,j)=>`<option value="${j}"${j==i?' selected':''}>${m[3]}</option>`).join(''),
+cd=(r,k)=>`<div class="card"><label for="cs${k}">Región ${k?'B':'A'}</label><br><select class="in" id="cs${k}" data-c="${k}">${opt(k?CB:CA)}</select><div class="fig">${f(val(r))}<small>%</small></div><div class="dl">${ML[MEAS]} · ${r[0]}</div></div>`;
+$('#cmp').innerHTML=`<div class="g c2">${cd(a,0)}${cd(b,1)}</div><div class="row" style="margin-top:12px"><span class="bd src">${a[0]} vs ${b[0]}</span><span class="dl">${d==0?'Sin diferencia':pp(d)+' ('+a[0]+' '+(d>0?'sobre':'bajo')+' '+b[0]+')'}</span></div><p class="src">${src()}</p>`;
+document.querySelectorAll('#cmp [data-c]').forEach(s=>s.onchange=()=>{s.dataset.c=='0'?CA=+s.value:CB=+s.value;drawCmp();$('#cs'+s.dataset.c).focus()})}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)document.querySelectorAll('nav a').forEach(a=>{const on=a.getAttribute('href')=='#'+e.target.id;a.classList.toggle('cur',on);on?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')})}),{rootMargin:'-30% 0px -60% 0px'});
+document.querySelectorAll('main section').forEach(x=>io.observe(x));
+// ---- arranque: copia guardada primero; luego datos en vivo y contorno geográfico
+build(SNAP);ST=`Copia guardada del agente (boletín n.º ${BOL}). Buscando datos en vivo…`;paint();render();sel(3);
+fetch(API).then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{if(!ok(d))throw 0;build(d);ST='Datos en vivo desde el agente (/regiones).';render();sel(SEL)}).catch(()=>{ST=`Copia guardada del agente (boletín n.º ${BOL}); el agente no respondió desde este navegador.`;render();sel(SEL)});
+fetch(GJ).then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{const g=prepGeo(j.features||[]);if(Object.keys(g.D).length<16)throw 0;GEO=g;$('#mapd').textContent='Contorno: GeoJSON público de caracena/chile-geojson, sin territorios insulares ni Antártica.';render();sel(SEL)}).catch(()=>{$('#mapd').textContent='No se pudo cargar el contorno geográfico. Se muestra el esquema norte-sur, sin escala.'});
+</script></body></html>
